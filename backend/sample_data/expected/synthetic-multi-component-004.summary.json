@@ -1,0 +1,247 @@
+{
+  "reportSchemaVersion": "1.0",
+  "analysisId": "ps08-synthetic-multi-component-004-t0.25-m6-c8",
+  "generatedAt": "2026-06-01T00:00:00.000Z",
+  "datasetMetadata": {
+    "schemaVersion": "1.0",
+    "datasetId": "synthetic-multi-component-004",
+    "title": "Multi-Cluster Clearing & Speckle Filtering (Synthetic)",
+    "origin": "synthetic",
+    "description": "Synthetic 30×30 multi-region dataset containing 4 substantive change clusters (45, 24, 16, and 12 pixels), 2 small noise speckles (3 and 2 pixels) removed by minimum-size filtering, and 60 cloud-masked pixels.",
+    "beforeDate": "2026-01-10",
+    "afterDate": "2026-09-10",
+    "width": 30,
+    "height": 30,
+    "alignmentId": "grid-utm-43n-synthetic-004",
+    "coordinateSystem": "LOCAL-METRIC-GRID-04",
+    "pixelWidthMeters": 10,
+    "pixelHeightMeters": 10
+  },
+  "configuration": {
+    "threshold": 0.25,
+    "minComponentSize": 6,
+    "connectivity": 8,
+    "comparisonOperator": "GREATER_THAN_OR_EQUAL (>=)",
+    "indexFormula": "NDVI = (NIR - Red) / (NIR + Red)",
+    "changeFormula": "absoluteChange = |NDVI_after - NDVI_before|"
+  },
+  "indexSummaries": {
+    "before": {
+      "min": -0.393828,
+      "max": 0.796894,
+      "mean": 0.631902,
+      "validIndexPixels": 864,
+      "zeroDenominatorPixels": 0
+    },
+    "after": {
+      "min": -0.393828,
+      "max": 0.796894,
+      "mean": 0.593272,
+      "validIndexPixels": 876,
+      "zeroDenominatorPixels": 0
+    }
+  },
+  "summaryStatistics": {
+    "totalPixels": 900,
+    "pixelAreaSquareMeters": 100,
+    "totalAreaSquareMeters": 90000,
+    "totalAreaHectares": 9,
+    "beforeValidity": {
+      "date": "2026-01-10",
+      "totalPixels": 900,
+      "maskValidPixels": 864,
+      "maskInvalidPixels": 36,
+      "zeroDenominatorPixels": 0,
+      "effectiveValidPixels": 864,
+      "validCoveragePercentage": 96
+    },
+    "afterValidity": {
+      "date": "2026-09-10",
+      "totalPixels": 900,
+      "maskValidPixels": 876,
+      "maskInvalidPixels": 24,
+      "zeroDenominatorPixels": 0,
+      "effectiveValidPixels": 876,
+      "validCoveragePercentage": 97.33
+    },
+    "eligiblePixelCount": 840,
+    "invalidPixelCount": 60,
+    "validCoveragePercentage": 93.33,
+    "invalidPercentage": 6.67,
+    "unchangedEligiblePixelCount": 738,
+    "candidateChangedPixelCount": 102,
+    "filteredOutChangedPixelCount": 5,
+    "retainedChangedPixelCount": 97,
+    "retainedDecreasePixelCount": 81,
+    "retainedIncreasePixelCount": 16,
+    "retainedDecreaseAreaHectares": 0.81,
+    "retainedIncreaseAreaHectares": 0.16,
+    "candidateChangedPercentage": 12.14,
+    "retainedChangedPercentage": 11.55,
+    "candidateChangeAreaSquareMeters": 10200,
+    "candidateChangeAreaHectares": 1.02,
+    "candidateChangeAreaSquareKilometers": 0.0102,
+    "retainedChangeAreaSquareMeters": 9700,
+    "retainedChangeAreaHectares": 0.97,
+    "retainedChangeAreaSquareKilometers": 0.0097,
+    "candidateComponentCount": 6,
+    "filteredOutComponentCount": 2,
+    "retainedComponentCount": 4,
+    "percentageDenominatorDescription": "Change percentages (candidateChangedPercentage and retainedChangedPercentage) use eligiblePixelCount (pixels valid with finite NDVI on BOTH dates) as the denominator. Valid/invalid grid coverage percentages use totalPixels (width × height) as the denominator."
+  },
+  "retainedComponents": [
+    {
+      "componentId": 1,
+      "pixelCount": 24,
+      "areaSquareMeters": 2400,
+      "areaHectares": 0.24,
+      "areaSquareKilometers": 0.0024,
+      "percentageOfEligible": 2.86,
+      "meanAbsoluteChange": 0.475,
+      "maxAbsoluteChange": 0.475,
+      "meanSignedChange": -0.475,
+      "dominantDirection": "decrease",
+      "boundingBox": {
+        "minRow": 2,
+        "maxRow": 5,
+        "minCol": 6,
+        "maxCol": 11
+      },
+      "centroid": {
+        "row": 3.5,
+        "col": 8.5
+      },
+      "retained": true
+    },
+    {
+      "componentId": 2,
+      "pixelCount": 45,
+      "areaSquareMeters": 4500,
+      "areaHectares": 0.45,
+      "areaSquareKilometers": 0.0045,
+      "percentageOfEligible": 5.36,
+      "meanAbsoluteChange": 0.725,
+      "maxAbsoluteChange": 0.725,
+      "meanSignedChange": -0.725,
+      "dominantDirection": "decrease",
+      "boundingBox": {
+        "minRow": 9,
+        "maxRow": 17,
+        "minCol": 10,
+        "maxCol": 14
+      },
+      "centroid": {
+        "row": 13,
+        "col": 12
+      },
+      "retained": true
+    },
+    {
+      "componentId": 3,
+      "pixelCount": 12,
+      "areaSquareMeters": 1200,
+      "areaHectares": 0.12,
+      "areaSquareKilometers": 0.0012,
+      "percentageOfEligible": 1.43,
+      "meanAbsoluteChange": 0.725,
+      "maxAbsoluteChange": 0.725,
+      "meanSignedChange": -0.725,
+      "dominantDirection": "decrease",
+      "boundingBox": {
+        "minRow": 10,
+        "maxRow": 15,
+        "minCol": 18,
+        "maxCol": 24
+      },
+      "centroid": {
+        "row": 12.5,
+        "col": 21
+      },
+      "retained": true
+    },
+    {
+      "componentId": 4,
+      "pixelCount": 16,
+      "areaSquareMeters": 1600,
+      "areaHectares": 0.16,
+      "areaSquareKilometers": 0.0016,
+      "percentageOfEligible": 1.9,
+      "meanAbsoluteChange": 0.625,
+      "maxAbsoluteChange": 0.625,
+      "meanSignedChange": 0.625,
+      "dominantDirection": "increase",
+      "boundingBox": {
+        "minRow": 22,
+        "maxRow": 25,
+        "minCol": 19,
+        "maxCol": 22
+      },
+      "centroid": {
+        "row": 23.5,
+        "col": 20.5
+      },
+      "retained": true
+    }
+  ],
+  "filteredOutComponents": [
+    {
+      "componentId": 1,
+      "pixelCount": 2,
+      "areaSquareMeters": 200,
+      "areaHectares": 0.02,
+      "areaSquareKilometers": 0.0002,
+      "percentageOfEligible": 0.24,
+      "meanAbsoluteChange": 0.475,
+      "maxAbsoluteChange": 0.475,
+      "meanSignedChange": -0.475,
+      "dominantDirection": "decrease",
+      "boundingBox": {
+        "minRow": 3,
+        "maxRow": 3,
+        "minCol": 15,
+        "maxCol": 16
+      },
+      "centroid": {
+        "row": 3,
+        "col": 15.5
+      },
+      "retained": false
+    },
+    {
+      "componentId": 2,
+      "pixelCount": 3,
+      "areaSquareMeters": 300,
+      "areaHectares": 0.03,
+      "areaSquareKilometers": 0.0003,
+      "percentageOfEligible": 0.36,
+      "meanAbsoluteChange": 0.475,
+      "maxAbsoluteChange": 0.475,
+      "meanSignedChange": -0.475,
+      "dominantDirection": "decrease",
+      "boundingBox": {
+        "minRow": 19,
+        "maxRow": 20,
+        "minCol": 6,
+        "maxCol": 7
+      },
+      "centroid": {
+        "row": 19.33,
+        "col": 6.33
+      },
+      "retained": false
+    }
+  ],
+  "warnings": [
+    "Synthetic dataset: pixel arrays represent deterministic simulated reflectance values, not actual satellite sensor imagery.",
+    "60 pixel(s) (6.67% of total grid) were excluded from comparison due to validity masks or zero NDVI denominators.",
+    "Minimum component size filter (6 px) removed 2 candidate group(s) totaling 5 pixel(s)."
+  ],
+  "limitations": [
+    "Detected changes represent pixel-level spectral index (NDVI) differences between the two temporal acquisitions and do NOT automatically prove real-world events such as deforestation, construction, agriculture, or hazard damage.",
+    "Optical bands (Red, NIR) are sensitive to unmasked thin clouds, cloud shadows, haze, and aerosol variations.",
+    "Solar elevation, viewing geometry, and bidirectional reflectance distribution (BRDF) illumination differences can shift index values without actual land-cover transformation.",
+    "Phenological and seasonal cycles (e.g., dry vs. wet season crop senescence) produce strong NDVI variations that require domain verification.",
+    "Sub-pixel co-registration or image alignment errors along sharp boundaries (roads, water edges, forest margins) can induce false edge-change components.",
+    "Results depend directly on the user-configured |ΔNDVI| threshold and minimum connected-component size filter; changes occurring without altering red/NIR contrast (e.g., grading bare soil to concrete of similar reflectance) may be missed."
+  ]
+}

@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: ps08-satellite-land-change-backend
+    runtime: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MAX_PAYLOAD_SIZE
+        value: 15mb
+      - key: CORS_ALLOWED_ORIGINS
+        sync: false

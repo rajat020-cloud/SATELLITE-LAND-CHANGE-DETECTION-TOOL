@@ -1,0 +1,9 @@
+{
+  "valid": false,
+  "expectedErrorCodes": [
+    "DIMENSION_MISMATCH",
+    "ALIGNMENT_MISMATCH",
+    "COORDINATE_SYSTEM_MISMATCH",
+    "PIXEL_RESOLUTION_MISMATCH"
+  ]
+}

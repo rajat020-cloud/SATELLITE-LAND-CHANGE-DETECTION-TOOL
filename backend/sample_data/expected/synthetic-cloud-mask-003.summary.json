@@ -1,0 +1,131 @@
+{
+  "reportSchemaVersion": "1.0",
+  "analysisId": "ps08-synthetic-cloud-mask-003-t0.25-m6-c8",
+  "generatedAt": "2026-06-01T00:00:00.000Z",
+  "datasetMetadata": {
+    "schemaVersion": "1.0",
+    "datasetId": "synthetic-cloud-mask-003",
+    "title": "Cloud & Sensor-Dropout Exclusion (Synthetic)",
+    "origin": "synthetic",
+    "description": "Synthetic 24×24 image pair demonstrating per-date cloud validity masks (42 masked pixels in before, 35 in after) and 2 zero-denominator pixels (79 total invalid pixels, 497 eligible pixels) alongside a 36-pixel changed zone.",
+    "beforeDate": "2026-03-10",
+    "afterDate": "2026-08-10",
+    "width": 24,
+    "height": 24,
+    "alignmentId": "grid-utm-43n-synthetic-003",
+    "coordinateSystem": "LOCAL-METRIC-GRID-03",
+    "pixelWidthMeters": 10,
+    "pixelHeightMeters": 10
+  },
+  "configuration": {
+    "threshold": 0.25,
+    "minComponentSize": 6,
+    "connectivity": 8,
+    "comparisonOperator": "GREATER_THAN_OR_EQUAL (>=)",
+    "indexFormula": "NDVI = (NIR - Red) / (NIR + Red)",
+    "changeFormula": "absoluteChange = |NDVI_after - NDVI_before|"
+  },
+  "indexSummaries": {
+    "before": {
+      "min": -0.393828,
+      "max": 0.796894,
+      "mean": 0.61407,
+      "validIndexPixels": 534,
+      "zeroDenominatorPixels": 0
+    },
+    "after": {
+      "min": -0.393828,
+      "max": 0.796894,
+      "mean": 0.591133,
+      "validIndexPixels": 539,
+      "zeroDenominatorPixels": 2
+    }
+  },
+  "summaryStatistics": {
+    "totalPixels": 576,
+    "pixelAreaSquareMeters": 100,
+    "totalAreaSquareMeters": 57600,
+    "totalAreaHectares": 5.76,
+    "beforeValidity": {
+      "date": "2026-03-10",
+      "totalPixels": 576,
+      "maskValidPixels": 534,
+      "maskInvalidPixels": 42,
+      "zeroDenominatorPixels": 0,
+      "effectiveValidPixels": 534,
+      "validCoveragePercentage": 92.71
+    },
+    "afterValidity": {
+      "date": "2026-08-10",
+      "totalPixels": 576,
+      "maskValidPixels": 541,
+      "maskInvalidPixels": 35,
+      "zeroDenominatorPixels": 2,
+      "effectiveValidPixels": 539,
+      "validCoveragePercentage": 93.58
+    },
+    "eligiblePixelCount": 497,
+    "invalidPixelCount": 79,
+    "validCoveragePercentage": 86.28,
+    "invalidPercentage": 13.72,
+    "unchangedEligiblePixelCount": 461,
+    "candidateChangedPixelCount": 36,
+    "filteredOutChangedPixelCount": 0,
+    "retainedChangedPixelCount": 36,
+    "retainedDecreasePixelCount": 36,
+    "retainedIncreasePixelCount": 0,
+    "retainedDecreaseAreaHectares": 0.36,
+    "retainedIncreaseAreaHectares": 0,
+    "candidateChangedPercentage": 7.24,
+    "retainedChangedPercentage": 7.24,
+    "candidateChangeAreaSquareMeters": 3600,
+    "candidateChangeAreaHectares": 0.36,
+    "candidateChangeAreaSquareKilometers": 0.0036,
+    "retainedChangeAreaSquareMeters": 3600,
+    "retainedChangeAreaHectares": 0.36,
+    "retainedChangeAreaSquareKilometers": 0.0036,
+    "candidateComponentCount": 1,
+    "filteredOutComponentCount": 0,
+    "retainedComponentCount": 1,
+    "percentageDenominatorDescription": "Change percentages (candidateChangedPercentage and retainedChangedPercentage) use eligiblePixelCount (pixels valid with finite NDVI on BOTH dates) as the denominator. Valid/invalid grid coverage percentages use totalPixels (width × height) as the denominator."
+  },
+  "retainedComponents": [
+    {
+      "componentId": 1,
+      "pixelCount": 36,
+      "areaSquareMeters": 3600,
+      "areaHectares": 0.36,
+      "areaSquareKilometers": 0.0036,
+      "percentageOfEligible": 7.24,
+      "meanAbsoluteChange": 0.725,
+      "maxAbsoluteChange": 0.725,
+      "meanSignedChange": -0.725,
+      "dominantDirection": "decrease",
+      "boundingBox": {
+        "minRow": 8,
+        "maxRow": 13,
+        "minCol": 9,
+        "maxCol": 14
+      },
+      "centroid": {
+        "row": 10.5,
+        "col": 11.5
+      },
+      "retained": true
+    }
+  ],
+  "filteredOutComponents": [],
+  "warnings": [
+    "Synthetic dataset: pixel arrays represent deterministic simulated reflectance values, not actual satellite sensor imagery.",
+    "After slice (2026-08-10) contained 2 pixel(s) where (NIR + Red) = 0; those pixels were excluded as invalid.",
+    "79 pixel(s) (13.72% of total grid) were excluded from comparison due to validity masks or zero NDVI denominators."
+  ],
+  "limitations": [
+    "Detected changes represent pixel-level spectral index (NDVI) differences between the two temporal acquisitions and do NOT automatically prove real-world events such as deforestation, construction, agriculture, or hazard damage.",
+    "Optical bands (Red, NIR) are sensitive to unmasked thin clouds, cloud shadows, haze, and aerosol variations.",
+    "Solar elevation, viewing geometry, and bidirectional reflectance distribution (BRDF) illumination differences can shift index values without actual land-cover transformation.",
+    "Phenological and seasonal cycles (e.g., dry vs. wet season crop senescence) produce strong NDVI variations that require domain verification.",
+    "Sub-pixel co-registration or image alignment errors along sharp boundaries (roads, water edges, forest margins) can induce false edge-change components.",
+    "Results depend directly on the user-configured |ΔNDVI| threshold and minimum connected-component size filter; changes occurring without altering red/NIR contrast (e.g., grading bare soil to concrete of similar reflectance) may be missed."
+  ]
+}
