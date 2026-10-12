@@ -9,14 +9,14 @@
 
 | Field | Value |
 | :--- | :--- |
-| **Candidate Name** | `<YOUR_FULL_NAME>` |
-| **Roll Number** | `<YOUR_ROLL_NUMBER>` |
-| **Branch / Department** | `<YOUR_BRANCH>` |
-| **University** | Chitkara University |
-| **GitHub Repository URL** | `https://github.com/rajat020-cloud/SATELLITE-LAND-CHANGE-DETECTION-TOOL` |
-| **Frontend Deployment URL (Vercel)** | `https://satellite-land-change-detection-too.vercel.app` |
-| **Backend Deployment URL (Render)** | `https://satellite-land-change-detection-tool.onrender.com` |
-| **Demo Video Link** | `<YOUR_DEMO_VIDEO_URL>` |
+| **Candidate Name** | Rajat Katnoria |
+| **Roll Number** | 2311981414 |
+| **Branch / Program** | BE(CSE) — Chitkara University |
+| **GitHub Repository URL** | https://github.com/rajat020-cloud/SATELLITE-LAND-CHANGE-DETECTION-TOOL |
+| **Deployed Frontend URL (Vercel)** | https://satellite-land-change-detection-too.vercel.app/ |
+| **Deployed Backend URL (Render)** | https://satellite-land-change-detection-tool.onrender.com |
+| **Interactive Swagger API Docs** | https://satellite-land-change-detection-tool.onrender.com/api/docs |
+| **Live Health Check Endpoint** | https://satellite-land-change-detection-tool.onrender.com/api/health |
 
 ---
 
