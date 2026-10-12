@@ -70,7 +70,9 @@ export const TopBar: React.FC<TopBarProps> = ({
               >
                 {catalog.map((item) => (
                   <option key={item.datasetId} value={item.datasetId}>
-                    {item.title} ({item.width}×{item.height})
+                    {item.datasetId === 'synthetic-incompatible-005'
+                      ? `⚠️ ${item.title} [Negative Validation Test]`
+                      : `${item.title} (${item.width}×${item.height})`}
                   </option>
                 ))}
                 {selectedDatasetId.startsWith('custom-') && (

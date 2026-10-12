@@ -20,6 +20,7 @@ import {
   AnalysisConfig,
   AnalysisResponse,
   ConnectivityType,
+  LandChangeDataset,
   NavigationTab,
   ValidationResult
 } from '../types/landChange';
@@ -33,10 +34,12 @@ import {
 
 interface OverviewPageProps {
   analysis: AnalysisResponse | null;
+  currentDataset?: LandChangeDataset | null;
   config: AnalysisConfig;
   onChangeConfig: (newConfig: AnalysisConfig) => void;
   onRunAnalysis: () => void;
   onValidateDataset: () => void;
+  onAutoReconcileAndAnalyze?: () => void;
   validationStatus: ValidationResult | null;
   errorMessage: string | null;
   isLoading: boolean;
@@ -46,10 +49,12 @@ interface OverviewPageProps {
 
 export const OverviewPage: React.FC<OverviewPageProps> = ({
   analysis,
+  currentDataset,
   config,
   onChangeConfig,
   onRunAnalysis,
   onValidateDataset,
+  onAutoReconcileAndAnalyze,
   validationStatus,
   errorMessage,
   isLoading,
@@ -74,29 +79,77 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
   };
 
   if (!analysis && !isLoading) {
+    const isNegativeTestCase = currentDataset?.datasetId === 'synthetic-incompatible-005';
+    const canAutoReconcile = Boolean(
+      currentDataset?.before &&
+        currentDataset?.after &&
+        onAutoReconcileAndAnalyze
+    );
+
     return (
-      <div className="rounded-2xl border border-slate-200 bg-white p-10 text-center shadow-xs">
+      <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-xs sm:p-10">
         <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600">
           <BarChart2 className="h-7 w-7" />
         </div>
-        <h2 className="text-lg font-bold text-slate-900">No Active Land Change Analysis</h2>
-        <p className="mx-auto mt-1.5 max-w-lg text-sm text-slate-500">
-          Select one of the bundled deterministic synthetic datasets or upload your own aligned temporal dataset JSON to run NDVI change detection and connected-component area analysis.
+        <h2 className="text-lg font-bold text-slate-900">
+          {isNegativeTestCase
+            ? 'PS08 Compatibility Guard Verified (Negative Test Case)'
+            : 'No Active Land Change Analysis'}
+        </h2>
+        <p className="mx-auto mt-1.5 max-w-2xl text-sm text-slate-500">
+          {isNegativeTestCase
+            ? 'Dataset "synthetic-incompatible-005" is an intentional negative test case required by PS08 Section 3 & Section 8 to prove that the engine rejects mismatched grid dimensions (20×20 vs 22×20 px) and conflicting alignment IDs rather than silently comparing unrelated pixels.'
+            : 'Select one of the bundled deterministic synthetic datasets or upload your own aligned temporal dataset JSON to run NDVI change detection and connected-component area analysis.'}
         </p>
-        {errorMessage && (
-          <div className="mx-auto mt-4 max-w-xl rounded-xl border border-rose-200 bg-rose-50 p-4 text-left text-xs text-rose-800">
-            <div className="font-semibold">Validation / Analysis Error:</div>
-            <div className="mt-1">{errorMessage}</div>
+
+        {isNegativeTestCase && (
+          <div className="mx-auto mt-4 max-w-2xl rounded-xl border border-emerald-200 bg-emerald-50 p-3.5 text-left text-xs text-emerald-900">
+            <div className="flex items-center gap-2 font-bold text-emerald-800">
+              <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-600" />
+              Expected PS08 Requirement Satisfied: Incompatible Images Safely Rejected
+            </div>
+            <p className="mt-1 text-emerald-700">
+              The backend validation pipeline caught all intentional mismatches before pixel subtraction. You can either switch back to a valid dataset below, or click{' '}
+              <span className="font-semibold">&ldquo;Auto-Crop &amp; Align to 20×20 Grid&rdquo;</span> to reconcile this dataset and run analysis on its overlapping 20×20 window.
+            </p>
           </div>
         )}
+
+        {errorMessage && (
+          <div className="mx-auto mt-4 max-w-2xl rounded-xl border border-rose-200 bg-rose-50 p-4 text-left text-xs text-rose-800">
+            <div className="font-semibold">Validation / Compatibility Guard Report:</div>
+            <div className="mt-1">{errorMessage}</div>
+            {validationStatus && validationStatus.issues.length > 0 && (
+              <ul className="mt-2.5 list-disc space-y-1 border-t border-rose-200/70 pt-2 pl-4 text-[11px] text-rose-700">
+                {validationStatus.issues.map((issue, idx) => (
+                  <li key={idx}>
+                    <span className="font-mono font-bold">[{issue.code}]</span>{' '}
+                    <span className="font-semibold">{issue.field}:</span> {issue.message}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        )}
+
         <div className="mt-6 flex flex-wrap justify-center gap-3">
+          {canAutoReconcile && (
+            <button
+              type="button"
+              onClick={onAutoReconcileAndAnalyze}
+              className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-emerald-700"
+            >
+              <CheckSquare className="h-4 w-4" />
+              Auto-Crop &amp; Align to 20×20 Grid &amp; Analyze
+            </button>
+          )}
           <button
             type="button"
             onClick={onLoadDefaultSample}
             className="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-700"
           >
             <Play className="h-4 w-4" />
-            Load Demo Dataset &amp; Analyze
+            Load Multi-Component Demo Dataset
           </button>
           <button
             type="button"

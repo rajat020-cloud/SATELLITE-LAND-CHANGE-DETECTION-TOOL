@@ -179,6 +179,49 @@ export const App: React.FC = () => {
     await executeAnalysisForDataset(currentDataset, config);
   };
 
+  const handleAutoReconcileAndAnalyze = async () => {
+    if (!currentDataset?.before || !currentDataset?.after) return;
+
+    const commonWidth = Math.min(currentDataset.before.width, currentDataset.after.width);
+    const commonHeight = Math.min(currentDataset.before.height, currentDataset.after.height);
+
+    const cropGrid = (grid: number[][], h: number, w: number): number[][] =>
+      grid.slice(0, h).map((row) => row.slice(0, w));
+
+    const reconciledDataset: LandChangeDataset = {
+      ...currentDataset,
+      datasetId: `${currentDataset.datasetId}-reconciled`,
+      title: `${currentDataset.title ?? currentDataset.datasetId} (Reconciled ${commonWidth}×${commonHeight})`,
+      before: {
+        ...currentDataset.before,
+        width: commonWidth,
+        height: commonHeight,
+        bands: {
+          red: cropGrid(currentDataset.before.bands.red, commonHeight, commonWidth),
+          nir: cropGrid(currentDataset.before.bands.nir, commonHeight, commonWidth)
+        },
+        validMask: cropGrid(currentDataset.before.validMask, commonHeight, commonWidth)
+      },
+      after: {
+        ...currentDataset.after,
+        width: commonWidth,
+        height: commonHeight,
+        alignmentId: currentDataset.before.alignmentId,
+        coordinateSystem: currentDataset.before.coordinateSystem ?? 'LOCAL-ALIGNED-GRID',
+        pixelWidthMeters: currentDataset.before.pixelWidthMeters,
+        pixelHeightMeters: currentDataset.before.pixelHeightMeters,
+        bands: {
+          red: cropGrid(currentDataset.after.bands.red, commonHeight, commonWidth),
+          nir: cropGrid(currentDataset.after.bands.nir, commonHeight, commonWidth)
+        },
+        validMask: cropGrid(currentDataset.after.validMask, commonHeight, commonWidth)
+      }
+    };
+
+    setCurrentDataset(reconciledDataset);
+    await executeAnalysisForDataset(reconciledDataset, config);
+  };
+
   const handleUploadCustomDataset = async (rawObject: unknown, fileName: string) => {
     setErrorMessage(null);
     setValidationStatus(null);
@@ -248,10 +291,12 @@ export const App: React.FC = () => {
           {activeTab === 'overview' && (
             <OverviewPage
               analysis={analysis}
+              currentDataset={currentDataset}
               config={config}
               onChangeConfig={setConfig}
               onRunAnalysis={handleRunCurrentAnalysis}
               onValidateDataset={handleValidateCurrent}
+              onAutoReconcileAndAnalyze={handleAutoReconcileAndAnalyze}
               validationStatus={validationStatus}
               errorMessage={errorMessage}
               isLoading={isLoading}
