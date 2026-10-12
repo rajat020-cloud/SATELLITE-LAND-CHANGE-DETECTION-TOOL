@@ -9,6 +9,7 @@ export function createApp(): express.Application {
   const app = express();
 
   const defaultAllowedOrigins = [
+    'https://satellite-land-change-detection-too.vercel.app',
     'http://localhost:5173',
     'http://127.0.0.1:5173',
     'http://localhost:4173',
@@ -18,7 +19,7 @@ export function createApp(): express.Application {
 
   const envOrigins = (process.env.CORS_ALLOWED_ORIGINS ?? '')
     .split(',')
-    .map((o) => o.trim())
+    .map((o) => o.trim().replace(/\/+$/, ''))
     .filter(Boolean);
 
   const allowedOrigins = new Set([...defaultAllowedOrigins, ...envOrigins]);
@@ -31,7 +32,14 @@ export function createApp(): express.Application {
           callback(null, true);
           return;
         }
-        if (allowedOrigins.has(origin) || allowedOrigins.has('*')) {
+        const normalizedOrigin = origin.replace(/\/+$/, '');
+        if (
+          allowedOrigins.has(normalizedOrigin) ||
+          allowedOrigins.has('*') ||
+          /^https:\/\/satellite-land-change-detection-too[a-z0-9-]*\.vercel\.app$/i.test(
+            normalizedOrigin
+          )
+        ) {
           callback(null, true);
           return;
         }

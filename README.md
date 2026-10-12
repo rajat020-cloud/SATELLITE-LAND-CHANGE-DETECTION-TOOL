@@ -14,8 +14,8 @@
 | **Branch / Department** | `<YOUR_BRANCH>` |
 | **University** | Chitkara University |
 | **GitHub Repository URL** | `https://github.com/rajat020-cloud/SATELLITE-LAND-CHANGE-DETECTION-TOOL` |
-| **Frontend Deployment URL (Vercel)** | `<YOUR_VERCEL_FRONTEND_URL>` |
-| **Backend Deployment URL (Render)** | `<YOUR_RENDER_BACKEND_URL>` |
+| **Frontend Deployment URL (Vercel)** | `https://satellite-land-change-detection-too.vercel.app` |
+| **Backend Deployment URL (Render)** | `https://satellite-land-change-detection-tool.onrender.com` |
 | **Demo Video Link** | `<YOUR_DEMO_VIDEO_URL>` |
 
 ---

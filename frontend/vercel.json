@@ -3,7 +3,14 @@
   "framework": "vite",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
+  "env": {
+    "VITE_API_BASE_URL": "https://satellite-land-change-detection-tool.onrender.com"
+  },
   "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://satellite-land-change-detection-tool.onrender.com/api/:path*"
+    },
     {
       "source": "/(.*)",
       "destination": "/index.html"

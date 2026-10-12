@@ -6,10 +6,19 @@ import {
   ValidationResult
 } from '../types/landChange';
 
+const DEFAULT_RENDER_BACKEND_URL = 'https://satellite-land-change-detection-tool.onrender.com';
+
 function getApiBaseUrl(): string {
   const envUrl = import.meta.env?.VITE_API_BASE_URL;
   if (typeof envUrl === 'string' && envUrl.trim().length > 0) {
     return envUrl.trim().replace(/\/+$/, '');
+  }
+  if (
+    typeof window !== 'undefined' &&
+    window.location &&
+    window.location.hostname.endsWith('.vercel.app')
+  ) {
+    return DEFAULT_RENDER_BACKEND_URL;
   }
   return '';
 }

@@ -1,10 +1,10 @@
 services:
   - type: web
-    name: ps08-satellite-land-change-backend
+    name: satellite-land-change-detection-tool
     runtime: node
     plan: free
     rootDir: backend
-    buildCommand: npm ci && npm run build
+    buildCommand: npm install --include=dev && npm run build
     startCommand: npm start
     healthCheckPath: /api/health
     envVars:
@@ -13,4 +13,4 @@ services:
       - key: MAX_PAYLOAD_SIZE
         value: 15mb
       - key: CORS_ALLOWED_ORIGINS
-        sync: false
+        value: https://satellite-land-change-detection-too.vercel.app,http://localhost:5173
