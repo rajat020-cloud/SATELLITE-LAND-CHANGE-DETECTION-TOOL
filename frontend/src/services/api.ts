@@ -9,9 +9,18 @@ import {
 const DEFAULT_RENDER_BACKEND_URL = 'https://satellite-land-change-detection-tool.onrender.com';
 
 function getApiBaseUrl(): string {
-  const envUrl = import.meta.env?.VITE_API_BASE_URL;
-  if (typeof envUrl === 'string' && envUrl.trim().length > 0) {
-    return envUrl.trim().replace(/\/+$/, '');
+  const rawEnvUrl =
+    import.meta.env?.VITE_API_BASE_URL ||
+    (import.meta.env as Record<string, string | undefined>)?.API_BASE_URL;
+
+  if (typeof rawEnvUrl === 'string' && rawEnvUrl.trim().length > 0) {
+    const cleaned = rawEnvUrl
+      .trim()
+      .replace(/\/+$/, '')
+      .replace(/\/api$/i, '');
+    if (/^https?:\/\//i.test(cleaned)) {
+      return cleaned;
+    }
   }
   if (
     typeof window !== 'undefined' &&
