@@ -119,9 +119,9 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
           <div className="mx-auto mt-4 max-w-2xl rounded-xl border border-rose-200 bg-rose-50 p-4 text-left text-xs text-rose-800">
             <div className="font-semibold">Validation / Compatibility Guard Report:</div>
             <div className="mt-1">{errorMessage}</div>
-            {validationStatus && validationStatus.issues.length > 0 && (
+            {validationStatus && validationStatus.issues.length > 1 && (
               <ul className="mt-2.5 list-disc space-y-1 border-t border-rose-200/70 pt-2 pl-4 text-[11px] text-rose-700">
-                {validationStatus.issues.map((issue, idx) => (
+                {validationStatus.issues.slice(1).map((issue, idx) => (
                   <li key={idx}>
                     <span className="font-mono font-bold">[{issue.code}]</span>{' '}
                     <span className="font-semibold">{issue.field}:</span> {issue.message}
